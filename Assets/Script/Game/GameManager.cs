@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Game.Enum;
 using Game.Setting;
+using Game.UI;
 using Game.Utility;
 using UnityEngine;
 
@@ -8,8 +10,9 @@ namespace Game
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private GameSetting gameSetting;
-        [SerializeField] private GameElement gameElement;
+        [field:SerializeField] public GameSetting gameSetting { get;private set; }
+        [field:SerializeField] public GameElement gameElement { get;private set; }
+        [SerializeField] private UIController uiController;
         private Board board;
         private Pooler pooler;
         private bool isPlay;
@@ -17,12 +20,19 @@ namespace Game
         private void Start()
         {
             pooler = new Pooler(gameElement.pieceObjectPrefab, new GameObject("Pooler").transform);
-            board = BoardGenerator.GenerateBoard(gameSetting.GridSize[0], gameElement.tilePrefab,gameSetting);
-            board.InitializeBoard(new FallFill(board, pooler, gameSetting));
-            Play().Forget();
+            uiController.Initialize(this);
+            uiController.ChangePage(EPage.Main);
         }
 
-        private async UniTask Play()
+        public void StartGame(int sizeIndex)
+        {
+            uiController.ChangePage(EPage.Play);
+            board = BoardGenerator.GenerateBoard(gameSetting.GridSize[sizeIndex], gameElement.tilePrefab,gameSetting);
+            board.InitializeBoard(new FallFill(board, pooler, gameSetting));
+            GameLoop().Forget();
+        }
+
+        private async UniTask GameLoop()
         {
             isPlay = true;
             while (isPlay)
