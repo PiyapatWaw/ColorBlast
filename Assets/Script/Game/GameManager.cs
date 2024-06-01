@@ -70,5 +70,10 @@ namespace Game
 
             return Vector2.zero;
         }
+
+        public void StopGame()
+        {
+            isPlay = false;
+        }
     }
 }

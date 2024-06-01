@@ -9,15 +9,16 @@ namespace Game.UI
     public class PlayPageUI : UIPage
     {
         [SerializeField] private Button backButton;
-        
-        public override void Initialize(UIController gameManager)
+        public override void Initialize(UIController uiController)
         {
+            base.Initialize(uiController);
             backButton.onClick.RemoveAllListeners();
             backButton.onClick.AddListener(Replay);
         }
         
         private void Replay()
         {
+            _controller.GameManager.StopGame();
             SceneManager.LoadScene("Game");
         }
     }

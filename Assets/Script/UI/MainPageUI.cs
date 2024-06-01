@@ -13,6 +13,7 @@ namespace Game.UI
 
         public override void Initialize(UIController uiController)
         {
+            base.Initialize(uiController);
             playButton.onClick.RemoveAllListeners();
             playButton.onClick.AddListener(()=>uiController.GameManager.StartGame(sizeSelector.value));
 

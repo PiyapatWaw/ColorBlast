@@ -6,7 +6,12 @@ namespace Game.UI
 {
     public abstract class UIPage : MonoBehaviour
     {
-        public abstract void Initialize(UIController uiController);
+        protected UIController _controller;
+
+        public virtual void Initialize(UIController uiController)
+        {
+            _controller = uiController;
+        }
 
         public void Show()
         {
