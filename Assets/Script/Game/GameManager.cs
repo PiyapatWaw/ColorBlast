@@ -24,11 +24,21 @@ namespace Game
             uiController.ChangePage(EPage.Main);
         }
 
-        public void StartGame(int sizeIndex)
+        public void StartGame(int sizeIndex,int fillType)
         {
             uiController.ChangePage(EPage.Play);
+            BoardFiller filler = null;
             board = BoardGenerator.GenerateBoard(gameSetting.GridSize[sizeIndex], gameElement.tilePrefab,gameSetting);
-            board.InitializeBoard(new FallFill(board, pooler, gameSetting));
+            switch (fillType)
+            {
+                case (int)EFillType.Instance :
+                    filler = new InstanceFill(board, pooler, gameSetting);
+                    break;
+                case (int)EFillType.Fall :
+                    filler =  new FallFill(board, pooler, gameSetting);
+                    break;
+            }
+            board.InitializeBoard(filler);
             GameLoop().Forget();
         }
 
