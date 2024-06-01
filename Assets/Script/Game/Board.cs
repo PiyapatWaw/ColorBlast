@@ -79,15 +79,19 @@ namespace Game
             return solveData;
         }
         
-        private void TriggerAdditionalPiece(SolveData solveData)
+        private void TriggerAdditionalPiece(SolveData solveData, List<Tile> processedTiles = null)
         {
+            if (processedTiles == null)
+                processedTiles = new List<Tile>();
+
             var specialTiles = new List<Tile>();
 
             foreach (var tile in solveData.SolveTiles)
             {
-                if (!tile.IsEmpty && tile.Piece.Solver is not BasicSolve)
+                if (!tile.IsEmpty && tile.Piece.Solver is not BasicSolve && !processedTiles.Contains(tile))
                 {
                     specialTiles.Add(tile);
+                    processedTiles.Add(tile);
                 }
             }
 
@@ -101,6 +105,11 @@ namespace Game
                         solveData.SolveTiles.Add(t);
                     }
                 }
+            }
+            
+            if (specialTiles.Count > 0)
+            {
+                TriggerAdditionalPiece(solveData, processedTiles);
             }
         }
 
