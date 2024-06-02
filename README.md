@@ -41,6 +41,10 @@ This project is a puzzle game developed in Unity, where players match and clear 
    - Functionality for identifying and resolving matches or combinations of pieces on the game board.
    - Detects patterns or configurations of pieces that meet specific criteria and triggers corresponding actions (e.g., removing pieces, activating special effects).
 
+4. **Screen Responsive:**
+   - `SceenResponsive` utility class ensures that the game's display adjusts dynamically to different screen sizes and aspect ratios.
+   - Automatically adjusts the camera's orthographic size to maintain consistent visuals and gameplay experience across various devices.
+
 ## Extensible
 
 The project architecture and design patterns are designed to be highly extensible, allowing for easy addition of new features, game modes, and mechanics. Some aspects that can be extended or modified include:
