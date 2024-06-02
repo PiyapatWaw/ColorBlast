@@ -17,7 +17,7 @@ namespace Game.Utility
             Vector2 tileSize = tilePrefab.ColliderSize;
             var gridSize = CalculateGridSize(size, tileSize);
             container.position = new Vector3(gridSize.x / 2 - tileSize.x / 2, gridSize.y / 2 - tileSize.y / 2, 0);
-            AdjustCameraSize(gridSize);
+            SceenResponsive.Resize(gridSize);
 
             for (int i = 0; i < size.y; i++)
             {
@@ -39,25 +39,6 @@ namespace Game.Utility
         private static Vector2 CalculateGridSize(Vector2Int size, Vector2 tileSize)
         {
             return new Vector2(size.x * tileSize.x, size.y * tileSize.y);
-        }
-
-        private static void AdjustCameraSize(Vector2 gridSize)
-        {
-            Camera mainCamera = Camera.main;
-            float screenRatio = (float)Screen.width / (float)Screen.height;
-            float targetRatio = gridSize.x / gridSize.y;
-
-            if (screenRatio >= targetRatio)
-            {
-                mainCamera.orthographicSize = gridSize.y / 2;
-            }
-            else
-            {
-                float differenceInSize = targetRatio / screenRatio;
-                mainCamera.orthographicSize = gridSize.y / 2 * differenceInSize;
-            }
-
-            mainCamera.orthographicSize += 1;
         }
 
         private static List<Vector2Int> GetAdjacentCoordinate(Vector2Int coordinate, Vector2Int size)
